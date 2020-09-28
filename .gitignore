@@ -1,3 +1,4 @@
 myprivatecreds.*
 *test*
 .DS_Store
+config.php
