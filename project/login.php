@@ -1,9 +1,9 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <form method="POST">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required/>
-    <label for="p1">Password:</label>
-    <input type="password" id="p1" name="password" required/>
+    <label for= "pleasesignin">Please sign in.</label> 
+    <input type="text" id="email" name="email" name="" placeholder="Email or Username"   required/>
+     
+    <input type="password" id="p1" name="password" name="" placeholder="Password"  required/>
     <input type="submit" name="login" value="Login"/>
 </form>
 
