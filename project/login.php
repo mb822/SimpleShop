@@ -1,16 +1,18 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
-<form method="POST">
-    <label for= "pleasesignin">Please sign in.</label> 
+    <form method="POST">
+    <label for= "pleasesignin">Please sign in.</label>
     <input type="text" id="email" name="email" name="" placeholder="Email or Username"   required/>
-     
+
     <input type="password" id="p1" name="password" name="" placeholder="Password"  required/>
     <input type="submit" name="login" value="Login"/>
-</form>
+    </form>
 
 <?php
 if (isset($_POST["login"])) {
     $email = null;
     $password = null;
+    $emailIsEmail = false;
+
     if (isset($_POST["email"])) {
         $email = $_POST["email"];
     }
@@ -20,22 +22,35 @@ if (isset($_POST["login"])) {
     $isValid = true;
     if (!isset($email) || !isset($password)) {
         $isValid = false;
+        flash("Email or password missing");
     }
-    if (!strpos($email, "@")) {
-        $isValid = false;
-        echo "<br>Invalid email<br>";
+    //check if (email or password) is 'type' email
+    if (strpos($email, "@" < strpos($email,".") )) {
+        //$isValid = false;
+        $emailIsEmail = true;
+        //echo "<br>Invalid email<br>";
+        //flash("Invalid email");
     }
     if ($isValid) {
         $db = getDB();
         if (isset($db)) {
-            $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email LIMIT 1");
+
+
+            if($emailIsEmail){
+                $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE email = :email LIMIT 1");
+            }
+            else{
+                $stmt = $db->prepare("SELECT id, email, username, password from Users WHERE username  = :email LIMIT 1");
+            }
+
 
             $params = array(":email" => $email);
             $r = $stmt->execute($params);
-            echo "db returned: " . var_export($r, true);
+            //echo "db returned: " . var_export($r, true);
             $e = $stmt->errorInfo();
             if ($e[0] != "00000") {
-                echo "uh oh something went wrong: " . var_export($e, true);
+                //echo "uh oh something went wrong: " . var_export($e, true);
+                flash("Something went wrong, please try again");
             }
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result && isset($result["password"])) {
@@ -56,19 +71,21 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                         $_SESSION["user"]["roles"] = [];
                     }
                     //on successful login let's serve-side redirect the user to the home page.
-                    header("Location: home.php");
+                    flash("Log in successful");
+                    die(header("Location: home.php"));
                 }
                 else {
-                    echo "<br>Invalid password, get out!<br>";
+                    flash("Sorry, incorrect password.");
                 }
             }
             else {
-                echo "<br>Invalid user<br>";
+                flash("Sorry, user doesn't exist.");
             }
         }
     }
     else {
-        echo "There was a validation issue";
+        flash("Sorry, there was a validation issue");
     }
 }
 ?>
+<?php require(__DIR__ . "/partials/flash.php");
