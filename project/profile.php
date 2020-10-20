@@ -72,23 +72,52 @@ if (isset($_POST["saved"])) {
         else {
             flash("Error updating profile");
         }
+
+
+
+
+
         //password is optional, so check if it's even set
         //if so, then check if it's a valid reset request
-        if (!empty($_POST["password"]) && !empty($_POST["confirm"])) {
-            if ($_POST["password"] == $_POST["confirm"]) {
-                $password = $_POST["password"];
-                $hash = password_hash($password, PASSWORD_BCRYPT);
-                //this one we'll do separate
-                $stmt = $db->prepare("UPDATE Users set password = :password where id = :id");
-                $r = $stmt->execute([":id" => get_user_id(), ":password" => $hash]);
-                if ($r) {
-                    flash("Reset Password");
+
+
+        if (!empty($_POST["password"]) && !empty($_POST["confirm"])   && !empty($_POST["current"]) ) {
+            $cur = $_POST["current"];
+            $stmt = $db->prepare("SELECT password from Users WHERE id = :userid");
+            $stmt->execute([":userid" => get_user_id()]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if($result && isset($result["password"])){
+                $password_hash_from_db = $result["password"];
+                if(password_verify($cur, $password_hash_from_db)){
+                    if ($_POST["password"] == $_POST["confirm"]){
+                        if(strlen($_POST["password"]) >= 8){
+                            $password = $_POST["password"];
+                            $hash = password_hash($password, PASSWORD_BCRYPT);
+                            $stmt = $db->prepare("UPDATE Users set password = :password where id = :id");
+                            $r = $stmt->execute([":id" => get_user_id(), ":password" => $hash]);
+                            if($r){flash("Password has been reset");}
+                            else{flash("Error resetting password");}
+                        }
+                        else if(strlen($_POST["password"])  < 8  ){flash("New password must be at least 8 characters.");}
+                    }
+                    else{flash("New passwords do not match.");}
                 }
-                else {
-                    flash("Error resetting password");
-                }
+                else{flash("Current password is incorrect.");}
             }
+
         }
+
+
+
+
+
+
+
+
+
+
+
 //fetch/select fresh data in case anything changed
         $stmt = $db->prepare("SELECT email, username from Users WHERE id = :id LIMIT 1");
         $stmt->execute([":id" => get_user_id()]);
@@ -119,7 +148,7 @@ if (isset($_POST["saved"])) {
        
         <!-- DO NOT PRELOAD PASSWORD-->
        
-        <input type="oldpassword" name="oldpassword" placeholder="Current Password"  />
+        <input type="password" name="current" placeholder="Current Password"  />
 
         <input type="password" name="password"  placeholder="New Password"  />
         
