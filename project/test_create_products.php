@@ -14,6 +14,8 @@ if (!has_role("Admin")) {
         <input type="number" min="0" name="quantity" placeholder="Quantity"/>
         <input type="float" min="0.00" name="price" placeholder="Price"/>
         <input type="text" name="description" placeholder="Description"/>
+	<input type="text" name="category" placeholder="Category"/>
+	<input type="checkbox" if="visible" name="visible" value="1"/><label for="visible">Visible?</label>
 
         <input type="submit" name="save" value="Create"/>
 </form>
@@ -26,15 +28,19 @@ if(isset($_POST["save"])){
         $price = $_POST["price"];
         $description = $_POST["description"];
         $user = get_user_id();
+	$category = $_POST["category"];
+	$visible = isset($_POST["visible"]);
         $db = getDB();
 
-        $stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id) VALUES(:name, :quantity, :price , :description, :user)");
+        $stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id, category, visibility) VALUES(:name, :quantity, :price , :description, :user, :category, :visibility)");
         $r = $stmt->execute([
                 ":name"=>$name,
                 ":quantity"=>$quantity,
                 ":price"=>$price,
                 ":description"=>$description,
-                ":user"=>$user
+                ":user"=>$user,
+		":category"=>$category,
+		":visibility"=>$visible
         ]);
 	if($r){
                	flash("Created successfully with id: " . $db->lastInsertId());
