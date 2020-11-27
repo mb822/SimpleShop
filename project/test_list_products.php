@@ -1,10 +1,10 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <?php
-if (!has_role("Admin")) {
+//if (!has_role("Admin")) {
     //this will redirect to login and kill the rest of this script (prevent it from executing)
-    flash("You don't have permission to access this page");
-    die(header("Location: login.php"));
-}
+  //  flash("You don't have permission to access this page");
+  //  die(header("Location: login.php"));
+//}
 ?>
 <?php
 $query = "";
@@ -47,8 +47,13 @@ if (isset($_POST["search"]) && !empty($query)) {
                         <div><?php safer_echo($r["description"]); ?></div>
                     </div>
                     <div>
-                        <a type="button" href="test_edit_product.php?id=<?php safer_echo($r['id']); ?>">Edit</a>
-                        <a type="button" href="test_view_products.php?id=<?php safer_echo($r['id']); ?>">View</a>
+
+			<?php if (has_role("Admin")): ?>
+                        	<a type="button" href="test_edit_product.php?id=<?php safer_echo($r['id']); ?>">Edit</a>|
+			<?php endif; ?>
+
+                        <a type="button" href="test_view_products.php?id=<?php safer_echo($r['id']); ?>">View</a>|
+			<a type="button" href="add_to_cart.php?id=<?php safer_echo($r['id']); ?>">Add to bag</a>
                     </div>
                 </div>
             <?php endforeach; ?>
