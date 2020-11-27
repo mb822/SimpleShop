@@ -31,10 +31,10 @@ if(isset($_POST["save"])){
 	$category = $_POST["category"];
 	$visible = isset($_POST["visible"]);
 
-	//$visibility = 0;
+	$visibility = 0;
 
-//	if($visible){$visibility = 1;}
-//	else{$visibility = TRUE;}
+	if($visible){$visibility = 1;}
+//	else{$visibility = 0;}
 	
 	flash(var_dump($visible));
 	
@@ -48,7 +48,7 @@ if(isset($_POST["save"])){
                 ":description"=>$description,
                 ":user"=>$user,
 		":category"=>$category,
-		":visibility"=>$visible
+		":visibility"=>$visibility
         ]);
 	if($r){
                	flash("Created successfully with id: " . $db->lastInsertId());
