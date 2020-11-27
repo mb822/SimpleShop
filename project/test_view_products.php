@@ -29,16 +29,15 @@ if (isset($id)) {
 <?php if (isset($result) && !empty($result)): ?>
     <div class="card">
         <div class="card-title">
-            <?php safer_echo($result["name"]); ?>
+          <!--  <?php safer_echo($result["name"]); ?> -->
         </div>
         <div class="card-body">
             <div>
-                <p>Stats</p>
-                <div>Name: <?php safer_echo($result["name"]); ?></div>
-                <div>Price: <?php safer_echo($result["price"]); ?></div>
-                <div>Description: <?php safer_echo($result["description"]); ?></div>
-                <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>
-                <div>Created by: <?php safer_echo($result["user_id"]); ?></div>
+                <h2><?php safer_echo($result["name"]); ?></h2>
+                <h6>$<?php safer_echo(number_format($result["price"]), 2); ?></h6>
+                <h6><?php safer_echo($result["description"]); ?></h6>
+            <!--    <div>Quantity: <?php safer_echo($result["quantity"]); ?></div>    -->
+           <!--     <div>Created by: <?php safer_echo($result["user_id"]); ?></div>   -->
             </div>
         </div>
     </div>

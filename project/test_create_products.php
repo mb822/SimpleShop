@@ -30,6 +30,14 @@ if(isset($_POST["save"])){
         $user = get_user_id();
 	$category = $_POST["category"];
 	$visible = isset($_POST["visible"]);
+
+	//$visibility = 0;
+
+//	if($visible){$visibility = 1;}
+//	else{$visibility = TRUE;}
+	
+	flash(var_dump($visible));
+	
         $db = getDB();
 
         $stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id, category, visibility) VALUES(:name, :quantity, :price , :description, :user, :category, :visibility)");

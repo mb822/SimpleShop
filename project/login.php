@@ -25,7 +25,7 @@ if (isset($_POST["login"])) {
         flash("Email or password missing");
     }
     //check if (email or password) is 'type' email
-    if (strpos($email, "@" < strpos($email,".") )) {
+    if (strpos($email, "@") < strpos($email,".") ) {
         //$isValid = false;
         $emailIsEmail = true;
         //echo "<br>Invalid email<br>";

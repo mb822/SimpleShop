@@ -59,6 +59,16 @@ function flash($msg) {
 
 }
 
+
+function getURL($path){
+	if(substr($path, 0, 1)== "/"){
+		return $path;
+	}
+	return $_SERVER["CONTEXT_PREFIX"]."ITGAME/project/$path";
+}
+
+
+
 function getMessages() {
     if (isset($_SESSION['flash'])) {
         $flashes = $_SESSION['flash'];
