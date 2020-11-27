@@ -96,7 +96,7 @@ background-color:#343a40
 	max-width: 200%;
 	max-height: 100%;
 	background:#000000;
-//	margin: -100px 0px 0px 0px;
+	margin: -8% 0px 0px 0px;
 }
 
 
@@ -209,7 +209,7 @@ border: 0;
 //  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
 	font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;;
     	font-weight: 500;
-    	font-size: 3.4em;
+    	font-size: 3.8em;
 	color:#ffffff;
 	background: #000000;	
 }
@@ -235,14 +235,15 @@ border: 0;
 
 .container{
 max-width: 100%;
-background-color:#007AFF!important;
+background-color:##6c757d!important;
 color:#ffffff;
+//looks good but messuses up pages other than home padding-top:15px;
 }
 
 #flash{
 max-width:100%;
-background-color:#007AFF!important;
-color:#ffffff;
+background-color:#6c757d!important;
+color:#ffffff; //looks cool #cc66e3
 }
 
 .row bg-secondary justify-content-center{
@@ -365,6 +366,7 @@ text-align:center;
 
 .row bg-secondary justify-content-center{
 background-color:#007AFF!important;
+margin-top:15px;
 }
 
 
@@ -373,4 +375,49 @@ background-color:#007AFF!important;
     background: rgba(0,0,0,0.9);
     /* opacity: 0.8; */
     backdrop-filter: blur(40px) saturate(200%) brightness(300%);
+}
+
+.subhead{
+        position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 400;
+        font-size: 2.2em;
+        color:#FBFBFD;
+        background: #000000;
+}
+.pricing-info{
+        position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 400;
+        font-size: 1.4em;
+        color:#86868B;
+        background: #000000;
+}
+
+
+h3.subhead {
+    background-color: #000000;
+    margin-bottom: -1px;
+    padding-bottom: 15px;
+}
+
+p.carrier {
+    margin-bottom: 0px;
+    padding-bottom: 15;
+}
+
+
+p.price.price-with-carrier {
+    margin-bottom: 3;
+}
+
+
+.navbar-dark .navbar-toggler {
+    color: #ffffff;
+      //  background: rgba(0,0,0,0.9);
+    /* opacity: 0.8; */
+   // backdrop-filter: blur(40px) saturate(200%) brightness(300%);
+	border-color:none; 
 }

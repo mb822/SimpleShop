@@ -3,7 +3,16 @@
 	<div class="conatiner">
 
 		<div class="centered">iPhone 12 Pro</div>
+		
+		<h3 class="subhead" role="presentation">It’s a leap year.</h3>
 
+		<div class="pricing-info">
+			<p class="price price-with-carrier">
+			<span aria-label="From forty one dollars and sixty two cents per month or nine hundred ninety nine dollars before trade in." role="text">From $41.62/mo. or $999 before trade‑in.</span><sup><a href="#footnote-1" class="footnote">1</a></sup>
+			</p>
+			<p class="carrier">Buy directly from Apple with special carrier offers.</p>
+		</div>	
+	
 		<div class="info">
                 <a type="button" class="info_page" href="test_view_products.php?id=16">Learn More ></a>
                 <a type="button" class="add_to_cart" href="add_to_cart.php?id=16">Add to bag ></a>
@@ -20,8 +29,8 @@
                 <div class="centered_inverted">iPhone 12</div>
 
                 <div class="info_inverted">
-                <a type="button" class="info_page_inverted" href="test_view_products.php?id=16">Learn More ></a>
-                <a type="button" class="add_to_cart_inverted" href="add_to_cart.php?id=16">Add to bag ></a>
+                <a type="button" class="info_page_inverted" href="test_view_products.php?id=28">Learn More ></a>
+                <a type="button" class="add_to_cart_inverted" href="add_to_cart.php?id=28">Add to bag ></a>
                 </div>
 
 		<img class="reg12bg" src="12reg.png">
