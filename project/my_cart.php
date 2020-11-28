@@ -1,3 +1,4 @@
+
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
 <?php
@@ -9,16 +10,29 @@ if (!is_logged_in()) {
 
 $db = getDB();
 
-//if(isset($_POST["delete"])){
-//    //$stmt = $db->prepare("DELETE FROM Cart  where id = :id");
-//    //$r = $stmt->execute([":id"=>$_POST["cartId"]]);
-//    //fix for example bug
-//    $stmt = $db->prepare("DELETE FROM Cart where id = :id AND user_id = :uid");
-//    $r = $stmt->execute([":id"=>$_POST["cartId"], ":uid"=>get_user_id()]);
-//    if($r){
-//        flash("Deleted item from cart", "success");
-//    }
-//}
+
+//delete_all
+if(isset($_POST["clear"])){
+    $stmt = $db->prepare("DELETE FROM Cart where user_id = :uid");
+    $r = $stmt->execute([ ":uid"=>get_user_id()]);
+    if($r){
+        flash("Bag has been cleared.");
+    }
+}
+
+
+
+
+if(isset($_POST["delete"])){
+    //$stmt = $db->prepare("DELETE FROM Cart  where id = :id");
+    //$r = $stmt->execute([":id"=>$_POST["cartId"]]);
+    //fix for example bug
+    $stmt = $db->prepare("DELETE FROM Cart where id = :id AND user_id = :uid");
+    $r = $stmt->execute([":id"=>$_POST["cartId"], ":uid"=>get_user_id()]);
+    if($r){
+        flash("Item removed from bag.");
+    }
+}
 
  $user = get_user_id();
 
@@ -92,7 +106,7 @@ $tot += $r["sub"];
 
 ?>
     <div class="container-fluid">
-        <label for= "pleasesignin">Your bag total is $<?php echo number_format($tot, 2); ?></label>
+        <label for= "pleasesignin">Your bag total is $<?php echo number_format(1.07*$tot, 2); ?></label>
         <div class="list-group">
         <?php if($results && count($results) > 0):?>
          <!--   <div class="list-group-item">
@@ -144,12 +158,23 @@ $tot += $r["sub"];
                         <form method="POST">      -->
                             <input type="hidden" name="cartId" value="<?php echo $r["id"];?>"/>
 			    <input type="submit" class="btn btn-success" name="update" value="Update"/>
-                         <!--   <input type="submit" class="btn btn-danger" name="delete" value="Remove Item"/>  -->
+                            <input type="submit" class="btn btn-danger" name="delete" value="Remove Item"/>
                         </form>
                     </div>
                 </div>
             </div>
+
             <?php endforeach;?>
+
+
+	<form method="POST">
+		<input type="submit" class="btn btn-danger" name="clear" value="Clear Bag"/>
+	</form>
+
+	<?php echo "Subtotal: "."$".number_format($tot,2);?>
+        <?php echo "Tax: ". "$".number_format($tot*0.07,2);?>
+	<?php echo "Total: "."$".(number_format($tot*1.07,2));?>
+
         <?php else:?>
         <div class="list-group-item">
             No items in cart
@@ -157,4 +182,4 @@ $tot += $r["sub"];
         <?php endif;?>
         </div>
     </div>
-<?php require(__DIR__ . "/partials/flash.php");
+<?php require(__DIR__ . "/partials/flash.php")?>

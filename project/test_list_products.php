@@ -14,7 +14,16 @@ if (isset($_POST["query"])) {
 }
 if (isset($_POST["search"]) && !empty($query)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q LIMIT 10");
+	
+    if(has_role("Admin")){
+	if($query == "ALL"){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products");}
+    	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
+    }
+    else{
+    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :q) AND visibility = 1 LIMIT 10");
+    }
+
+
     $r = $stmt->execute([":q" => "%$query%"]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,7 +35,7 @@ if (isset($_POST["search"]) && !empty($query)) {
 ?>
 <form method="POST">
     <label for= "pleasesignin">Search Inventory.</label>
-    <input name="query" placeholder="Search" value="<?php safer_echo($query); ?>"/>
+    <input name="query" placeholder="Search by Name or Category" value="<?php safer_echo($query); ?>"/>
     <input type="submit" value="Search" name="search"/>
 </form>
 <div class="results">

@@ -7,15 +7,6 @@ if (!is_logged_in()) {
     die(header("Location: login.php"));
 }
 ?>
-<!--    <label for= "pleasesignin">Create Cart.</label>
-    <form method="POST">
-
-        <input type= "hidden" name="product_id" placeholder="Product ID"/>
-        <input type="number" min="1" name="quantity" placeholder="Quantity"/>
-
-        <input type="submit" name="save" value="Create"/> 
-    </form>
--->
 <?php
 //////////////////if (isset($_POST["save"])) {
     //TODO add proper validation/checks
@@ -50,7 +41,8 @@ if(!empty($priceAry)){
     }
     else {
 	$e = $stmt->errorInfo();
-        flash("Product already in bag.");
+       // flash("Product already in bag.");
+	die(header("Location: my_cart.php"));
     }
 }
 else{flash("Error.");}
