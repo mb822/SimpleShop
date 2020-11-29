@@ -1,47 +1,109 @@
+
 /* design intentionally made horrible to see who doesn't change it*/
+
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+   font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+   /* font-family: SF Pro Text;*/
     font-size: 1.0em;
 }
 
 ul[class="nav"]{
     text-align: center;
-    position: relative;
+   /* position: relative;*/
     left: -10px;
-    top: -10px;
-    width: 110%;
+   /* top: 10px;*/
+    width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #3c3c3c;
+   // overflow: hidden;
+    background-color: #1A1A1A;
+//    opacity: 0.9;
+
+
+//-webkit-filter: blur(2px);
+  // -moz-filter: blur(2px);
+  // -o-filter: blur(2px);
+  // -ms-filter: blur(2px);
+  // filter: blur(20px);
+
+
+
 }
 
+
+//.sticky-top{
+//-webkit-filter: blur(2px);
+//   -moz-filter: blur(2px);
+//   -o-filter: blur(2px);
+//   -ms-filter: blur(2px);
+//   filter: blur(2px);
+//}
+
+
+
+
+.nav {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+}
+
+
+
+
 .nav > li {
-    text-align: cneter;
-    position: relative;
+	filter: blur(0px);
+    text-align: center;
+   /* position: relative;*/
     left: 300px;
     float: left;
 }
 
 .nav > li a {
+filter: blur(0px);
     display: block;
     color: #e9e9e9;
-    text-align: center;
+   /* text-align: center;*/
     padding: 16px;
     text-decoration: none;
 }
 
 .nav > li a:hover {
+	filter: blur(0px);
     background-color: #3c3c3c0;
     color: #ffffff;
 }
 
 
+.nav-link{
+filter: blur(0px);
+//looks dope but sccs messes it us	background-color: #1A1A1A;
+background-color:#343a40
+//	opacity: 0.8;
+}
+
+
+.picture-image{
+	padding-left: 8%;
+	padding-right: 8%;
+//	filter: grayscale(100%);
+	//background-size: 100%;
+	width: 100%;
+//	height: 100%;
+	max-width: 200%;
+	max-height: 100%;
+	background:#000000;
+	margin: -8% 0px 0px 0px;
+}
+
+
 
 label[for=pleasesignin]{
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
     font-size: 2.0em;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -50,19 +112,41 @@ label[for=pleasesignin]{
 }
 
 label[for=createanaccount]{
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 700;
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
     font-size: 2.0em;
-    margin-top:	50px;
+    margin-top: 50px;
     margin-bottom: 50px;
     margin-left: 300px;
     display:inline-block;
 }
 
+
+label[for=addproductpage]{
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 2.0em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 300px;
+    display:inline-block;
+}
+
+label[for=addproductpage]{
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 2.0em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 300px;
+    display:inline-block;
+}
+
+
 input, select {
  //   margin-right: 1000px;
  //   margin-left: 25px;
-   font-family: Arial, Helvetica, sans-serif;
+   font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
  //   font-size: 1.0em;
  //   width: 20%;
  //   padding: 12px 30px;
@@ -72,8 +156,7 @@ input, select {
  //   border-radius: 10px;
  //   box-sizing: border-box;
 
-
-  //  float: middle;
+ //  float: middle;
     font-size: 15px;
     border-radius: 100px;
     width: 20%;
@@ -83,7 +166,11 @@ input, select {
     border: 1px solid #2349c4;
     border-radius: 10px;
     box-sizing: border-box;
+    outline: none;
 }
+
+
+
 
 
 input[type=submit] {
@@ -95,9 +182,242 @@ input[type=submit] {
     color: white;
     padding: 15px 20px;
     margin: 30px 300px;
-    border: none;
-    border-radius: 10px;
+   border: none;
+   border-radius: 10px;
     cursor: pointer;
     float: middle;
+	outline: none;
 }
 
+
+input[type=checkbox]{
+margin: 0;
+border: 0;
+}
+
+
+
+.centered{
+	padding-top: 80px;
+//	top: 50%;
+//	left: 50%;
+//	transform: translate(35%, -700%);
+	position: relative;
+	text-align:center;
+//	font-family: "San Francisco";
+ // font-weight: 400;
+//  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+	font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;;
+    	font-weight: 500;
+    	font-size: 3.8em;
+	color:#ffffff;
+	background: #000000;	
+}
+
+
+.prod_name{
+    padding-top:20px;
+    padding_bottom:20px;
+    padding-bottom:20px
+    padding-top:20px
+
+
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    //margin-top: 50px;
+    //margin-bottom: 50px;
+    margin-left: 200px;
+    text-align:center;
+    display: inline-block;
+    color: #212529;
+}
+
+.container{
+max-width: 100%;
+background-color:##6c757d!important;
+color:#ffffff;
+//looks good but messuses up pages other than home padding-top:15px;
+}
+
+#flash{
+max-width:100%;
+background-color:#6c757d!important;
+color:#ffffff; //looks cool #cc66e3
+}
+
+.row bg-secondary justify-content-center{
+background-color:#007AFF!important;
+}
+
+.row bg-secondary justify-content-center{
+color:#007AFF!important;
+}
+
+
+.bg_secondary{
+background-color:#007AFF!important;
+}
+
+.cart{
+text-align:center;
+}
+
+.info_page{
+        position: relative;
+        text-align:center;
+	font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        color:#007AFF;
+        right-padding: 10px;
+        background-color: #000000;
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.info_page_inverted{
+	position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        color:#007AFF;
+        right-padding: 10px;
+        background-color: #FBFBFD;
+        margin-left:15px;
+        margin-right:15px;
+}
+
+
+
+.add_to_cart{
+	position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        color:#007AFF;
+        background-color: #000000;
+        left-padding: 10px;
+        margin-left:15px;
+        margin-right:15px;
+}
+
+
+
+.info_inverted {
+    text-align: center;
+    background-color:FBFBFD;
+}
+
+
+
+.reg12bg{
+        padding-left: 8%;
+        padding-right: 8%;
+        width: 100%;
+        max-width: 200%;
+        max-height: 100%;
+        background:#FBFBFD;
+//	margin: -10px -10px -10px -10px;
+}
+
+
+
+.add_to_cart_inverted{
+	position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        color:#007AFF;
+        background-color: #FBFBFD;
+        left-padding: 10px;
+        margin-left:15px;
+        margin-right:15px;
+}
+
+
+
+.info_inverted{
+    text-align: center;
+    background-color:#FBFBFD;
+}
+
+
+.centered_inverted{
+	padding-top: 80px;
+        position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 700;
+        font-size: 3.4em;
+        color:#000000000;
+        background: #FBFBFD;
+}
+
+
+.info{
+	background-color:#000000;
+	text-align:center;
+
+}
+
+.row bg-secondary justify-content-center{
+background-color:#007AFF!important;
+margin-top:15px;
+}
+
+
+
+.navbar {
+    background: rgba(0,0,0,0.9);
+    /* opacity: 0.8; */
+    backdrop-filter: blur(40px) saturate(200%) brightness(300%);
+}
+
+.subhead{
+        position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 400;
+        font-size: 2.2em;
+        color:#FBFBFD;
+        background: #000000;
+}
+.pricing-info{
+        position: relative;
+        text-align:center;
+        font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 400;
+        font-size: 1.4em;
+        color:#86868B;
+        background: #000000;
+}
+
+
+h3.subhead {
+    background-color: #000000;
+    margin-bottom: -1px;
+    padding-bottom: 15px;
+}
+
+p.carrier {
+    margin-bottom: 0px;
+    padding-bottom: 15;
+}
+
+
+p.price.price-with-carrier {
+    margin-bottom: 3;
+}
+
+
+.navbar-dark .navbar-toggler {
+    color: #ffffff;
+      //  background: rgba(0,0,0,0.9);
+    /* opacity: 0.8; */
+   // backdrop-filter: blur(40px) saturate(200%) brightness(300%);
+	border-color:none; 
+}

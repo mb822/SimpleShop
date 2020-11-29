@@ -25,7 +25,7 @@ if (isset($_POST["login"])) {
         flash("Email or password missing");
     }
     //check if (email or password) is 'type' email
-    if (strpos($email, "@" < strpos($email,".") )) {
+    if (strpos($email, "@") < strpos($email,".") ) {
         //$isValid = false;
         $emailIsEmail = true;
         //echo "<br>Invalid email<br>";
@@ -71,7 +71,7 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                         $_SESSION["user"]["roles"] = [];
                     }
                     //on successful login let's serve-side redirect the user to the home page.
-                    flash("Log in successful");
+                   // flash("Log in successful");
                     die(header("Location: home.php"));
                 }
                 else {

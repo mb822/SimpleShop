@@ -22,10 +22,15 @@ if(isset($_POST["save"])){
         $price = $_POST["price"];
         $description = $_POST["description"];
         $user = get_user_id();
+	$category = $_POST["category"];
+	$visible = $_POST["visible"];
         $db = getDB();
-
+//	$visibility = 0;
+//	flash();
+//	if($visible){visibility = 1;}
+	
 	if(isset($id)){
-		$stmt = $db->prepare("UPDATE Products set name=:name, quantity=:quantity, price=:price, description=:description, user_id=:user where id=:id");
+		$stmt = $db->prepare("UPDATE Products set name=:name,visibility=:visibility, quantity=:quantity, price=:price, description=:description,category=:category,  user_id=:user where id=:id");
 		//$stmt = $db->prepare("UPDATE Products (name, quantity, price, description, user_id) VALUES(:name, :quantity, :price , :description, :user), where id=:id");
 		//$stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id) VALUES(:name, :quantity, :price , :description, :user)");
 		$r = $stmt->execute([
@@ -34,7 +39,9 @@ if(isset($_POST["save"])){
                 	":price"=>$price,
                 	":description"=>$description,
                 	":user"=>$user,
-			":id"=>$id
+			":id"=>$id,
+			":category"=>$category,
+			":visibility"=>$visible
 		]);
 		if($r){
 			flash("Updated successfully with id: " . $id);
@@ -66,6 +73,7 @@ if(isset($id)){
         <label for= "pleasesignin">Edit Product.</label>
 	
 	
+	
         <input type="text" name="name" placeholder="Name" value="<?php echo $result["name"];?>" />
       	
 	
@@ -73,11 +81,32 @@ if(isset($id)){
         
 	
 	<input type="float" min="0.00" name="price" placeholder="Price" value="<?php echo $result["price"];?>"  />
+
+
+<!-- <input type="checkbox" if="visible" name="visible" value="<?php echo $result["visibility"];?>"      /><label for="visible">Visible?</label>
+-->
+
+<input type="number"  name="visible" placeholder="Visibility" value="<?php echo $result["visibility"];?>"  />
+
+<input type="text"  name="category" placeholder="Category" value="<?php echo $result["category"];?>"  />
         
 	
 	<input type="text" name="description" placeholder="Description" value="<?php echo $result["description"];?>"  />
 	
         <input type="submit" name="save" value="Submit Changes"/>
+
+
+
+
+
+
+     
+
+
+
+
+
+
 
 </form>
 
