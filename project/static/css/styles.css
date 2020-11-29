@@ -431,14 +431,49 @@ margin-bottom:0px;
 
 
 #useless {
-     background-color: blue;
+     background-color: #dcdddf;
      -webkit-animation: random 5s infinite;
-     animation: colorcycle 20s infinite;
+     animation: colorcycle 10s infinite;
 }
 @keyframes  colorcycle {
-    20% { background-color: red; } 
-    40% { background-color: orange; } 
-    60% { background-color: yellow; } 
-    80% { background-color: green; }
-    100% { background-color: blue; }
+    20% { background-color: #d7e5ee; } 
+    40% { background-color: #deecda; } 
+    60% { background-color: #fad5cd; } 
+    80% { background-color: #76777c; }
+    100% { background-color: #dcdddf; }
+}
+
+
+.ipadImg{
+	padding-left: 8%;
+        padding-right: 8%;
+        width: 100%;
+        max-width: 200%;
+        max-height: 100%;
+//        background:#FBFBFD;
+	margin: -10% -10% -10% -10&;
+}
+
+.clear_header{
+    padding-top: 80px;
+    position: relative;
+    text-align: center;
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    font-size: 3.4em;
+}
+
+.clear_link{
+    position: relative;
+    text-align: center;
+    font-family: SF Pro Display,SF Pro Icons,AOS Icons,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 1.2em;
+    color: #007AFF;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.clear_div{
+	text-align: center;
 }

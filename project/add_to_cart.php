@@ -8,26 +8,15 @@ if (!is_logged_in()) {
 }
 ?>
 <?php
-//////////////////if (isset($_POST["save"])) {
-    //TODO add proper validation/checks
-   // $product_id = $_POST["product_id"];
-  //  $quantity = $_POST["quantity"];
     $user = get_user_id();
     $db = getDB();
 
 if(isset($_GET["id"])){
         $id = $_GET["id"];
 }
-
-
-
     $priceAry = (($db->query("SELECT price FROM Products WHERE id = $id"))->fetchAll());
-
 if(!empty($priceAry)){
         $price = $priceAry[0][0];
-
-
-
     $stmt = $db->prepare("INSERT INTO Cart (product_id, quantity, user_id, price) VALUES (:product_id, :quantity, :user, :price)");
     $r = $stmt->execute([
         ":product_id" => $id,
@@ -41,14 +30,10 @@ if(!empty($priceAry)){
     }
     else {
 	$e = $stmt->errorInfo();
-       // flash("Product already in bag.");
 	die(header("Location: my_cart.php"));
     }
 }
 else{flash("Error.");}
-
-/////////////////////////}
 ?>
 <?php require(__DIR__ . "/partials/flash.php");
-
-
+?>

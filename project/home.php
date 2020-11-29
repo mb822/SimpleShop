@@ -36,7 +36,21 @@
 		<img class="reg12bg" src="12reg.png">
 
 		
-		<div id="useless">USELESS DIV FOR TESTING</div>
+		<div id="useless">
+			                <div class="clear_header">! iPad Air</div>
+
+                			<div class="clear_div">
+               				<a type="button" class="clear_link" href="test_view_products.php?id=31">Learn More ></a>
+                			<a type="button" class="clear_link" href="add_to_cart.php?id=31">Add to bag ></a>
+                			</div>
+			
+			<img class="ipadImg" src="ipadV2.png"  alt="iPad Air">
+		</div>
+
+
+		<div>
+			<h1 style='color:<?php printf( "#%06X\n", mt_rand( 0, 0xffffff )); ?>'>THIS TEXT IS A RANDOM COLOR</h1>
+		</div>
 				
 	</div>
 <?php

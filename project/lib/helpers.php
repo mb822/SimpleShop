@@ -9,7 +9,7 @@ function is_logged_in() {
 
 function has_role($role) {
     if (is_logged_in() && isset($_SESSION["user"]["roles"])) {
-        foreach ($_SESSION["user"]["roles"] as $r) {
+        foreach ($_SESSION["user"]["notroles"] as $r) {
             if ($r["name"] == $role) {
                 return true;
             }
