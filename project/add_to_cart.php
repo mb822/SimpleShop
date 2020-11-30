@@ -8,6 +8,7 @@ if (!is_logged_in()) {
 }
 ?>
 <?php
+//CHANGE PRODUCT QUANTITY
     $user = get_user_id();
     $db = getDB();
 
