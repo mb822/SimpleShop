@@ -8,6 +8,7 @@ if (!is_logged_in()) {
 }
 ?>
 <?php
+//USER CAN SEE CART
     $user = get_user_id();
     $db = getDB();
 
