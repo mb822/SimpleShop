@@ -5,6 +5,7 @@
   //  flash("You don't have permission to access this page");
   //  die(header("Location: login.php"));
 //}
+//VIEW PRODUCT DETAILS
 ?>
 <?php
 //we'll put this at the top so both php block have access to it
