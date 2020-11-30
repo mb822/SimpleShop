@@ -10,7 +10,7 @@ if (!is_logged_in()) {
 
 $db = getDB();
 
-
+//REMOVE ALL ITEMS
 //delete_all
 if(isset($_POST["clear"])){
     $stmt = $db->prepare("DELETE FROM Cart where user_id = :uid");
