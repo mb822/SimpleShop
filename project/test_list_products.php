@@ -7,6 +7,7 @@
 //}
 ?>
 <?php
+//VIEW PRODUCTS
 $query = "";
 $results = [];
 $sort = "";
