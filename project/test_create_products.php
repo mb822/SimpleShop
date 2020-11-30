@@ -21,6 +21,7 @@ if (!has_role("Admin")) {
 </form>
 
 <?php
+//CREATE PRODUCT
 if(isset($_POST["save"])){
         //TODO add proper validation/checks
         $name = $_POST["name"];
