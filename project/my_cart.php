@@ -22,7 +22,7 @@ if(isset($_POST["clear"])){
 
 
 
-
+//REMOVE SINGLE ITEM
 if(isset($_POST["delete"])){
     //$stmt = $db->prepare("DELETE FROM Cart  where id = :id");
     //$r = $stmt->execute([":id"=>$_POST["cartId"]]);
