@@ -13,7 +13,7 @@ if(isset($_GET["id"])){
 }
 ?>
 <?php
-//saving
+//ADMIN EDIT PRODUCT
 if(isset($_POST["save"])){
 	//TODO add proper validation/checks
 
