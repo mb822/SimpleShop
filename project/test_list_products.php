@@ -6,6 +6,8 @@
   //  die(header("Location: login.php"));
 //}
 ?>
+
+//ADMIN VIEW ALL PRODS
 <?php
 $query = "";
 $results = [];
