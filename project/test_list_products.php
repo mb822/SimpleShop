@@ -9,13 +9,41 @@
 <?php
 $query = "";
 $results = [];
+$sort = "";
+
+if(isset($_POST["sort_by"])){
+    $sort = $_POST["sort_by"];
+}
+
 if (isset($_POST["query"])) {
     $query = $_POST["query"];
 }
+
 if (isset($_POST["search"]) && !empty($query)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q LIMIT 10");
-    $r = $stmt->execute([":q" => "%$query%"]);
+	
+    if(has_role("Admin")){
+	if($query == "ALL"){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products");}
+    	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
+    }
+    else{
+//	flash(var_dump($sort) );
+//	flash("first if:");
+//	flash(var_dump(strcmp($sort, "hl")==0));
+//	flash("Second if:");
+//	flash(var_dump(strcmp($sort, "lh")==0));
+	
+//	flash(var_dump($sort=="0"));	
+//
+
+
+	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC   LIMIT 10");}
+	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC   LIMIT 10");}
+	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT 10");}
+    }
+
+
+    $r = $stmt->execute([":q" => "%$query%", ":category" => "$query" ]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -26,7 +54,16 @@ if (isset($_POST["search"]) && !empty($query)) {
 ?>
 <form method="POST">
     <label for= "pleasesignin">Search Inventory.</label>
-    <input name="query" placeholder="Search" value="<?php safer_echo($query); ?>"/>
+    <input name="query" placeholder="Search by Name or Category" value="<?php safer_echo($query); ?>"/>
+	 
+	<select name="sort_by" id="sort_by"  value="<?php safer_echo($sort); ?>" >
+
+	    <option value="0" <?php echo($sort== "0"?'selected="selected"': '');    ?>>Sort by: None</option>
+	    <option value="hl" <?php echo($sort== "hl"?'selected="selected"': '');    ?>>Price: High to Low</option>
+	    <option value="lh" <?php echo($sort== "lh"?'selected="selected"': '');    ?>>Price: Low to High</option>
+
+	</select>	
+	
     <input type="submit" value="Search" name="search"/>
 </form>
 <div class="results">

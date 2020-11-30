@@ -66,6 +66,7 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                     $_SESSION["user"] = $result;//we can save the entire result array since we removed password
                     if ($roles) {
                         $_SESSION["user"]["roles"] = $roles;
+			$_SESSION["user"]["notroles"] = $roles;
                     }
                     else {
                         $_SESSION["user"]["roles"] = [];

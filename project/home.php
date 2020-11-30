@@ -2,13 +2,13 @@
 
 	<div class="conatiner">
 
-		<div class="centered">iPhone 12 Pro</div>
+		<div class="centered">! iPhone 12 Pro</div>
 		
 		<h3 class="subhead" role="presentation">It’s a leap year.</h3>
 
 		<div class="pricing-info">
 			<p class="price price-with-carrier">
-			<span aria-label="From forty one dollars and sixty two cents per month or nine hundred ninety nine dollars before trade in." role="text">From $41.62/mo. or $999 before trade‑in.</span><sup><a href="#footnote-1" class="footnote">1</a></sup>
+			<span aria-label="From forty one dollars and sixty two cents per month or nine hundred ninety nine dollars before trade in." role="text">From $54.13/mo. or $1299 before trade‑in.</span> <!-- <sup><a href="#footnote-1" class="footnote">1</a></sup> -->
 			</p>
 			<p class="carrier">Buy directly from Apple with special carrier offers.</p>
 		</div>	
@@ -26,7 +26,7 @@
 
 
 
-                <div class="centered_inverted">iPhone 12</div>
+                <div class="centered_inverted">! iPhone 12</div>
 
                 <div class="info_inverted">
                 <a type="button" class="info_page_inverted" href="test_view_products.php?id=28">Learn More ></a>
@@ -35,8 +35,22 @@
 
 		<img class="reg12bg" src="12reg.png">
 
+		
+		<div id="useless">
+			                <div class="clear_header">! iPad Air</div>
+
+                			<div class="clear_div">
+               				<a type="button" class="clear_link" href="test_view_products.php?id=31">Learn More ></a>
+                			<a type="button" class="clear_link" href="add_to_cart.php?id=31">Add to bag ></a>
+                			</div>
+			
+			<img class="ipadImg" src="ipadV2.png"  alt="iPad Air">
+		</div>
 
 
+		<div>
+			<h1 style='color:<?php printf( "#%06X\n", mt_rand( 0, 0xffffff )); ?>'>THIS TEXT IS A RANDOM COLOR</h1>
+		</div>
 				
 	</div>
 <?php
