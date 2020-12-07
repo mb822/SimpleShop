@@ -69,20 +69,40 @@ if (isset($_POST["search"]) && !empty($query)) {
 <div class="results">
     <?php if (count($results) > 0): ?>
         <div class="list-group">
-            <?php foreach ($results as $r): ?>
+
+
+
+
+
+
+<?php
+    $i = 0;
+?>
+
+
+<div class="row">
+<?php foreach ($results as $r): ?>
+<?php $i++; ?>
+
+
+
+<div class='col-lg-2'>
+<div class='item'>
+
                 <div class="list-group-item">
                     <div>
-                        <div>Name:</div>
+                       <!-- <div>Name:</div>-->
                         <div><?php safer_echo($r["name"]); ?></div>
                     </div>
                     <div>
-                        <div>Price:</div>
+                       <!-- <div>Price:</div>-->
                         <div><?php safer_echo("$".$r["price"]); ?></div>
                     </div>
                     <div>
-                        <div>Description:</div>
-                        <div><?php safer_echo($r["description"]); ?></div>
-                    </div>
+                       <!-- <div>Description:</div>-->
+          <!--              <div><?php safer_echo($r["description"]); ?></div>  -->
+                    </div>   
+
                     <div>
 
 			<?php if (has_role("Admin")): ?>
@@ -93,9 +113,22 @@ if (isset($_POST["search"]) && !empty($query)) {
 			<a type="button" href="add_to_cart.php?id=<?php safer_echo($r['id']); ?>">Add to bag</a>
                     </div>
                 </div>
-            <?php endforeach; ?>
+
+</div>
+</div>
+
+
+<?php endforeach; ?>
+
+
+
+
+
+
+
         </div>
     <?php else: ?>
-        <p>No results</p>
+        <p class="no_results">No results</p>
     <?php endif; ?>
 </div>
+
