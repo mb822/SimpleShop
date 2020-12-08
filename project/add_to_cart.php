@@ -26,11 +26,11 @@ if(!empty($priceAry)){
     ]);
     if ($r) {
 	//flash("Product added to cart");
-        die(header("Location: my_cart.php"));
+        die(header("Location: testcart.php"));
     }
     else {
 	$e = $stmt->errorInfo();
-	die(header("Location: my_cart.php"));
+	die(header("Location: testcart.php"));
     }
 }
 else{flash("Error.");}

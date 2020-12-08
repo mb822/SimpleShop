@@ -498,7 +498,7 @@ margin-bottom:0px;
     border-radius: 15px;
     height: 100%;
     width: 350px;
-    max-height: 200px;
+    max-height: 400px;
 
 }
 
@@ -528,8 +528,11 @@ margin-bottom:0px;
     width: 100%;
     padding-right: 15px; 
     padding-left: 15px;
+    padding-top: 15pc;
+    padding-bottom: 15px;
+
     padding: 5px;
-    max-height: 280px;
+    max-height: 400px;
 }
 
 *, ::after, ::before {
@@ -555,4 +558,11 @@ form {
 .cart_item_div {
     margin-left: 20%;
     display: flex;
+}
+
+
+
+div {
+    font-size: 20px;
+    font-weight: 200;
 }

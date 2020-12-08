@@ -23,8 +23,8 @@ if (isset($_POST["search"]) && !empty($query)) {
     $db = getDB();
 	
     if(has_role("Admin")){
-	if($query == "ALL"){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products");}
-    	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
+	if($query == "ALL"){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products");}
+    	else{$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
     }
     else{
 //	flash(var_dump($sort) );
@@ -37,9 +37,9 @@ if (isset($_POST["search"]) && !empty($query)) {
 //
 
 
-	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC   LIMIT 10");}
-	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC   LIMIT 10");}
-	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT 10");}
+	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC   LIMIT 10");}
+	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC   LIMIT 10");}
+	else{$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT 10");}
     }
 
 
@@ -94,6 +94,12 @@ if (isset($_POST["search"]) && !empty($query)) {
                        <!-- <div>Name:</div>-->
                         <div><?php safer_echo($r["name"]); ?></div>
                     </div>
+
+			<div>
+				<img aria-hidden="true"  src="<?php echo $r["checkout_img"]?>" width="200" height="240" alt="" class="ir">
+			</div>
+
+
                     <div>
                        <!-- <div>Price:</div>-->
                         <div><?php safer_echo("$".$r["price"]); ?></div>
