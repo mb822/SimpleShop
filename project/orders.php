@@ -14,6 +14,7 @@
     $user = get_user_id();
 
     if(has_role("Admin")){
+	    //Added admin purchase history
         $stmt = $db->prepare("SELECT * from Orders LIMIT 10");
     }
     else{
