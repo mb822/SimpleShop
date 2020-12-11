@@ -15,6 +15,9 @@ if (!has_role("Admin")) {
         <input type="float" min="0.00" name="price" placeholder="Price"/>
         <input type="text" name="description" placeholder="Description"/>
 	<input type="text" name="category" placeholder="Category"/>
+	
+	<input type="test" name="checkout_img" placeholder="Checkout Image" >
+	
 	<input type="checkbox" if="visible" name="visible" value="1"/><label for="visible">Visible?</label>
 
         <input type="submit" name="save" value="Create"/>
@@ -31,6 +34,8 @@ if(isset($_POST["save"])){
 	$category = $_POST["category"];
 	$visible = isset($_POST["visible"]);
 
+	$checkout_img = $_POST["checkout_img"];
+
 	$visibility = 0;
 
 	if($visible){$visibility = 1;}
@@ -40,8 +45,9 @@ if(isset($_POST["save"])){
 	
         $db = getDB();
 
-        $stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id, category, visibility) VALUES(:name, :quantity, :price , :description, :user, :category, :visibility)");
+        $stmt = $db->prepare("INSERT INTO Products  (checkout_img, name, quantity, price, description, user_id, category, visibility) VALUES(:checkout_img, :name, :quantity, :price , :description, :user, :category, :visibility)");
         $r = $stmt->execute([
+		":checkout_img"=>$checkout_img,
                 ":name"=>$name,
                 ":quantity"=>$quantity,
                 ":price"=>$price,
