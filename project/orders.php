@@ -6,6 +6,7 @@
   //  flash("You don't have permission to access this page");
   //  die(header("Location: login.php"));
 //}
+/
 
 ?>
 <?php
@@ -17,6 +18,7 @@
         $stmt = $db->prepare("SELECT * from Orders LIMIT 10");
     }
     else{
+	    //User purchase History added
         //SELECT OrderItems.*, Orders.user_id, Orders.address, Orders.total_price, Orders.payment_method FROM OrderItems JOIN Orders ON OrderItems.order_id = Orders.id
         $stmt = $db->prepare("SELECT * FROM Orders WHERE user_id = :user LIMIT 10");
     }
