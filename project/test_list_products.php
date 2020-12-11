@@ -19,12 +19,16 @@ if (isset($_POST["query"])) {
     $query = $_POST["query"];
 }
 
-if (isset($_POST["search"]) && !empty($query)) {
+if (isset($_POST["search"])) { //!empty($query)
     $db = getDB();
-	
+
+   if(empty($query)){
+       $query = "iphone";
+   }
+
     if(has_role("Admin")){
-	if($query == "ALL"){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products");}
-    	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
+	if($query == "ALL"){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products");}
+    	else{$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
     }
     else{
 //	flash(var_dump($sort) );
@@ -37,9 +41,9 @@ if (isset($_POST["search"]) && !empty($query)) {
 //
 
 
-	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC   LIMIT 10");}
-	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC   LIMIT 10");}
-	else{$stmt = $db->prepare("SELECT id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT 10");}
+	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC   LIMIT 10");}
+	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC   LIMIT 10");}
+	else{$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT 10");}
     }
 
 
@@ -67,22 +71,53 @@ if (isset($_POST["search"]) && !empty($query)) {
     <input type="submit" value="Search" name="search"/>
 </form>
 <div class="results">
+
+<!--<?php if($query == ""): ?>
+<label for="pleasesignin" style="font-size: 1.2em;color: #3465b6; font-weight: 400; margin-top:15px">Popular Products.</label>
+<?php endif; ?>-->
+
     <?php if (count($results) > 0): ?>
         <div class="list-group">
-            <?php foreach ($results as $r): ?>
+
+
+
+
+
+
+<?php
+    $i = 0;
+?>
+
+
+<div class="row">
+<?php foreach ($results as $r): ?>
+<?php $i++; ?>
+
+
+
+<div class='col-lg-2'>
+<div class='item'>
+
                 <div class="list-group-item">
                     <div>
-                        <div>Name:</div>
+                       <!-- <div>Name:</div>-->
                         <div><?php safer_echo($r["name"]); ?></div>
                     </div>
+
+			<div>
+				<img aria-hidden="true"  src="<?php echo $r["checkout_img"]?>" width="200" height="240" alt="" class="ir">
+			</div>
+
+
                     <div>
-                        <div>Price:</div>
+                       <!-- <div>Price:</div>-->
                         <div><?php safer_echo("$".$r["price"]); ?></div>
                     </div>
                     <div>
-                        <div>Description:</div>
-                        <div><?php safer_echo($r["description"]); ?></div>
-                    </div>
+                       <!-- <div>Description:</div>-->
+          <!--              <div><?php safer_echo($r["description"]); ?></div>  -->
+                    </div>   
+
                     <div>
 
 			<?php if (has_role("Admin")): ?>
@@ -93,9 +128,22 @@ if (isset($_POST["search"]) && !empty($query)) {
 			<a type="button" href="add_to_cart.php?id=<?php safer_echo($r['id']); ?>">Add to bag</a>
                     </div>
                 </div>
-            <?php endforeach; ?>
+
+</div>
+</div>
+
+
+<?php endforeach; ?>
+
+
+
+
+
+
         </div>
     <?php else: ?>
-        <p>No results</p>
+        <p class="no_results">No results</p>
     <?php endif; ?>
 </div>
+
+<label style="margin-top:300px;"></label>
