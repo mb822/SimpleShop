@@ -60,6 +60,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
 	<?php endif; ?>
 
 	<?php if (is_logged_in()): ?>
+	    <li><a href="orders.php" class="nav-link" >Orders</a></li>
             <li><a href="profile.php" class="nav-link" >Profile</a></li>
             <li><a href="logout.php" class="nav-link" >Logout</a></li>
 	<?php endif; ?>

@@ -14,7 +14,7 @@
     $user = get_user_id();
 
     if(has_role("Admin")){
-        $stmt = $db->prepare("SELECT * from Orders");
+        $stmt = $db->prepare("SELECT * from Orders LIMIT 10");
     }
     else{
         //SELECT OrderItems.*, Orders.user_id, Orders.address, Orders.total_price, Orders.payment_method FROM OrderItems JOIN Orders ON OrderItems.order_id = Orders.id
@@ -53,7 +53,7 @@
 <?php $i++; ?>
 
 
-
+<a href = "view_order.php?id=<?php safer_echo($r['id']); ?>" style="text-decoration:none; margin-bottom:10px;">
 <div class='col-lg-2'>
 <div class='item'>
 
@@ -95,7 +95,7 @@
 
 </div>
 </div>
-
+</a>
 
 <?php endforeach; ?>
 

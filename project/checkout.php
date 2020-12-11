@@ -167,7 +167,7 @@ if(isset($_POST["saved"])){
 	</div>
 
 
-        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <input type="tel" name="phone" placeholder="Phone Number" />
         <input type="text" name="address"  placeholder="Address" required  />
         <input type="text" name="city"  placeholder="City"  required  />
 

@@ -19,9 +19,13 @@ if (isset($_POST["query"])) {
     $query = $_POST["query"];
 }
 
-if (isset($_POST["search"]) && !empty($query)) {
+if (isset($_POST["search"])) { //!empty($query)
     $db = getDB();
-	
+
+   if(empty($query)){
+       $query = "iphone";
+   }
+
     if(has_role("Admin")){
 	if($query == "ALL"){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products");}
     	else{$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE name like :q OR category=  :q");}
@@ -67,6 +71,11 @@ if (isset($_POST["search"]) && !empty($query)) {
     <input type="submit" value="Search" name="search"/>
 </form>
 <div class="results">
+
+<!--<?php if($query == ""): ?>
+<label for="pleasesignin" style="font-size: 1.2em;color: #3465b6; font-weight: 400; margin-top:15px">Popular Products.</label>
+<?php endif; ?>-->
+
     <?php if (count($results) > 0): ?>
         <div class="list-group">
 
@@ -131,10 +140,10 @@ if (isset($_POST["search"]) && !empty($query)) {
 
 
 
-
         </div>
     <?php else: ?>
         <p class="no_results">No results</p>
     <?php endif; ?>
 </div>
 
+<label style="margin-top:300px;"></label>
