@@ -48,8 +48,8 @@
 		</div>
 
 
-		<div>
-			<h1 style='color:<?php printf( "#%06X\n", mt_rand( 0, 0xffffff )); ?>'>THIS TEXT IS A RANDOM COLOR</h1>
+		<div id="useless" >
+			<a href="spaceflight.php" style='margin-left:45%; color:<?php printf( "#%06X\n", mt_rand( 0, 0xffffff )); ?>'>are you bored?</a>
 		</div>
 				
 	</div>

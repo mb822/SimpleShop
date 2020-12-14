@@ -18,6 +18,15 @@ if(isset($_POST["sort_by"])){
 if (isset($_POST["query"])) {
     $query = $_POST["query"];
 }
+else{
+    $db = getDB();
+    $stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products WHERE category = 'iphone'");
+    $r = $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
 
 if (isset($_POST["search"])) { //!empty($query)
     $db = getDB();
@@ -25,6 +34,37 @@ if (isset($_POST["search"])) { //!empty($query)
    if(empty($query)){
        $query = "iphone";
    }
+
+
+
+
+
+///////////////////////////pagination
+
+//$page = 1;
+//$per_page = 10;
+//if(isset($_GET["page"])){
+//    try {
+//        $page = (int)$_GET["page"];
+//    }
+//    catch(Exception $e){}
+//}
+//$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND visibility = 1");
+//$stmt->execute([":q" => "%$query%", ":category" => "$query" ]);
+//$result = $stmt->fetch(PDO::FETCH_ASSOC);
+//$total = 0;
+//if($result){
+//    $total = (int)$result["total"];
+//}
+//$total_pages = ceil($total / $per_page);
+//$offset = ($page-1) * $per_page;
+
+
+
+/////////////////////////pagination
+
+
+
 
     if(has_role("Admin")){
 	if($query == "ALL"){$stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id from Products");}
@@ -72,11 +112,14 @@ if (isset($_POST["search"])) { //!empty($query)
 </form>
 <div class="results">
 
-<!--<?php if($query == ""): ?>
+<?php if(!isset($_POST["query"])): ?>
 <label for="pleasesignin" style="font-size: 1.2em;color: #3465b6; font-weight: 400; margin-top:15px">Popular Products.</label>
-<?php endif; ?>-->
+<?php endif; ?>
 
     <?php if (count($results) > 0): ?>
+
+
+
         <div class="list-group">
 
 
@@ -134,6 +177,33 @@ if (isset($_POST["search"])) { //!empty($query)
 
 
 <?php endforeach; ?>
+
+
+
+
+
+
+
+<!-- for pagination
+        <nav aria-label="My Eggs">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo ($page-1) < 1?"disabled":"";?>">
+                    <a class="page-link" href="?page=<?php echo $page-1;?>" tabindex="-1">Previous</a>
+                </li>
+                <?php for($i = 0; $i < $total_pages; $i++):?>
+                <li class="page-item <?php echo ($page-1) == $i?"active":"";?>"><a class="page-link" href="?page=<?php echo ($i+1);?>"><?php echo ($i+1);?></a></li>
+                <?php endfor; ?>
+                <li class="page-item <?php echo ($page) >= $total_pages?"disabled":"";?>">
+                    <a class="page-link" href="?page=<?php echo $page+1;?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+-->
+
+
+
+
+
 
 
 
