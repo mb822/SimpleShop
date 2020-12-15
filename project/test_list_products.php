@@ -10,43 +10,56 @@
 $query = "";
 $results = [];
 $sort = "";
+$stock = "";
 
 
+//$query = "not iphone";
+//$sort = "hl";
 
-if(isset($_SESSION["query"])){$query =  $_SESSION["query"];}
-elseif(isset($_GET["query"])){$query = $_POST["query"] ;}
-
+if(isset($_SESSION["query"])){$query = $_SESSION["query"];}
 if(isset($_SESSION["sort"])){$sort = $_SESSION["sort"];}
-elseif(isset($_GET["sort_by"])){$query = $_POST["sort_by"] ;}
+if(isset($_SESSION["stock"])){$stock = $_SESSION["stock"];}
+
+if(isset($_POST["query"]) && $_POST["query"] != $query  ){$query = $_POST["query"];}
+if(isset($_POST["sort_by"]) && $_POST["sort_by"] != $query  ){$sort = $_POST["sort_by"];}
+if(isset($_POST["stock"]) && $_POST["stock"] != $stock  ){$stock = $_POST["stock"];}
+//echo $_POST["query"];
+//echo $_POST["sort_by"];
+
+$_SESSION["query"] = $query;
+$_SESSION["sort"] = $sort;
+$_SESSION["stock"] = $stock;
+
+$tempstock = 0;
+if($stock != 0){$tempstock = $stock;}
 
 
 
-//if(isset($_POST["sort_by"])){
-//    $sort = $_POST["sort_by"];
-//}
+//if(!empty($_GET["query"])){$query = $_POST["query"] ;}
+//elseif(isset($_SESSION["query"])){$query =  $_SESSION["query"];}
+
+//if(!empty($_GET["sort_by"])){$sort = $_POST["sort_by"] ;}
+//elseif(isset($_SESSION["sort"])){$sort = $_SESSION["sort"];}
 
 
-//if(isset($_GET["query"])){
-//echo "post query is set";
-//$query = $_GET["query"];
-//}
+//if(isset($_POST["query"])){$_SESSION["query"] = $_POST["query"];}
+//else{$_SESSION["query"] = "";}
+//if(isset($_POST["sort_by"])){$_SESSION["sort"] = $_POST["sort_by"];}
+//else{$_SESSION["sort"] = "";}
 
-//elseif (isset($_SESSION["query"]) ) {
-//    $query = $_POST["query"];
-//}
 
-//else{
-//    $db = getDB();
-//    $stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE category = 'iphone'");
-//    $r = $stmt->execute();
-//    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-//}
+        //$query = $_SESSION["query"];
+        //$sort = $_SESSION["sort"];
 
 
 
-echo $query;
-echo $sort;
 
+
+
+//echo "these parameters run in the pagination query     ";
+//echo "query: ".$query. "     ";
+//echo "sort: ".$sort."     ";
+//echo "<br>";
 
 
 
@@ -65,7 +78,11 @@ if(isset($_GET["page"])){
 }
 $db = getDB();
 
-if(has_role('Admin')){$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category)");}
+if(has_role('Admin')){echo $tempstock;
+$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND quantity >= $tempstock");
+//else{$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category)");}
+}
+
 else{$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND visibility = 1");}
 
 $stmt->execute([":q" => "%$query%", ":category" => "$query" ]);
@@ -85,13 +102,24 @@ $offset = ($page-1) * $per_page;
 
     
 
+if($query != ""){
 
+if(has_role('Admin')){
+	if($query == "ALL"){echo "1";$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products  WHERE    ( :q IS NOT NULL  OR :category IS NOT NULL  OR :offset IS NOT NULL OR  :count IS NOT NULL AND quantity >= $tempstock )        "         );}
+     	elseif(strcmp($sort, "lh")==0){echo "2";    $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rLH")==0){ echo "3";  $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rHL")==0){echo "4";    $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "hl")==0){ echo "5";   $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
+        else{echo "6";$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  LIMIT :offset, :count");}
+}
+
+else{
 	if(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price ASC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "rLH")==0){    $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rLH")==0){   $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY average_rating ASC LIMIT :offset, :count");}
         elseif(strcmp($sort, "rHL")==0){    $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY average_rating DESC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "hl")==0){    $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1  ORDER BY price DESC LIMIT :offset, :count");}
         else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) AND visibility = 1 LIMIT :offset, :count");}    
-
+}
 
     $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
     $stmt->bindValue(":count", $per_page, PDO::PARAM_INT);
@@ -101,6 +129,7 @@ $stmt->bindValue(":category", "$query"   );
     $r = $stmt->execute();
 
 	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 
@@ -123,30 +152,18 @@ $stmt->bindValue(":category", "$query"   );
 
 
 
-
-if (isset($_POST["search"])) { //!empty($query)
+if (isset($_POST["search"]) && !empty($query)    ) {
     $db = getDB();
-
-
-
-
-   //if(empty($query)){
-     //  $query = "";
-   //}
-
-
-
-	$_SESSION["query"] = $_POST["query"]; echo $_POST["query"]; echo "   ";
-	$_SESSION["sort"] = $_POST["sort_by"];  echo $_POST["sort_by"];
-	$query = $_SESSION["query"]; 
-	$sort = $_SESSION["sort"];
-	
 	
 
     if(has_role("Admin")){
 	//id = id because bind requires key to be in query to my knowledge
-	if($query == "ALL"){$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products  WHERE     :q IS NOT NULL  OR :category IS NOT NULL  OR :offset IS NOT NULL OR  :count IS NOT NULL         "         );}
-    	else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE   (name like :q OR category = :category)       AND (:offset IS NOT NULL OR  :count IS NOT NULL)     ");}
+        if($query == "ALL"){$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products  WHERE     :q IS NOT NULL  OR :category IS NOT NULL  OR :offset IS NOT NULL OR  :count IS NOT NULL         "         );}
+        elseif(strcmp($sort, "lh")==0){    $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category)  ORDER BY price ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rLH")==0){   $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rHL")==0){    $stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "hl")==0){    $stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category)  ORDER BY price DESC LIMIT :offset, :count");}
+        else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE (name like :q OR category = :category) LIMIT :offset, :count");}
     }
     else{
 
@@ -200,14 +217,17 @@ $stmt->bindValue(":category", "$query"   );
 
 
 	</select>	
+<?php if(has_role("Admin")): ?>
+    <input name="stock" placeholder="Filter by minimum stock" value="<?php safer_echo($stock); ?>"/>
+<?php endif;?>
 	
     <input type="submit" value="Search" name="search"/>
 </form>
 <div class="results">
 
-<?php if(!isset($_POST["query"])): ?>
+<!-- <?php if(!isset($_POST["query"])): ?>
 <label for="pleasesignin" style="font-size: 1.2em;color: #3465b6; font-weight: 400; margin-top:15px">Popular Products.</label>
-<?php endif; ?>
+<?php endif; ?> -->
 
     <?php if (count($results) > 0): ?>
 
@@ -294,7 +314,7 @@ $stmt->bindValue(":category", "$query"   );
 
 <!-- for pagination -->
         <nav>
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center" style="margin-left: -15%;margin-top: 40px;">
                 <li class="page-item <?php echo ($page-1) < 1?"disabled":"";?>">
                     <a class="page-link" href="?page=<?php echo $page-1;?>" tabindex="-1">Previous</a>
                 </li>
