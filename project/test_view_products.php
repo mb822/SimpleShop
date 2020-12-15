@@ -17,7 +17,7 @@ if (isset($_GET["id"])) {
 $result = [];
 if (isset($id)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT checkout_img, id, name, quantity, price, description, user_id FROM Products WHERE id = :id");
+    $stmt = $db->prepare("SELECT average_rating, checkout_img, id, name, quantity, price, description, user_id FROM Products WHERE id = :id");
     $r = $stmt->execute([":id" => $id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
@@ -25,6 +25,17 @@ if (isset($id)) {
         flash($e[2]);
     }
     $name = $result["name"];
+    $average_rating = $result["average_rating"];
+
+
+                            if(round($average_rating) == 1){$average_rating = "★☆☆☆☆";}
+                            elseif(round($average_rating) == 2){$average_rating = "★★☆☆☆";}
+                            elseif(round($average_rating) == 3){$average_rating = "★★★☆☆";}
+                            elseif(round($average_rating) == 4){$average_rating = "★★★★☆";}
+			    elseif(round($average_rating) == 5){$average_rating = "★★★★★";}
+                            
+                        
+
 }
 ?>
 <?php if (isset($result) && !empty($result)): ?>
@@ -38,6 +49,8 @@ if (isset($id)) {
         <div class="card-body">
             <div>
 
+
+	<h2 style="color:#ff7d00;"><?php safer_echo($average_rating); ?></h2>
 
 		<div style="display:flex">
                 	<h2><?php safer_echo($result["name"]); ?></h2>
@@ -259,6 +272,16 @@ if(isset($_POST["save"])){
              	$e = $stmt->errorInfo();
                 flash("Issue with writing a review.". var_export($e, true));
         }
+
+
+//add logic to update average_rating
+$stmt = $db->prepare("SELECT AVG(rating) as rating FROM Ratings WHERE product_id = $id");
+$r = $stmt->execute();
+$average = ($stmt->fetch(PDO::FETCH_ASSOC))["rating"];
+
+
+		$stmt = $db->prepare("UPDATE Products set average_rating=$average  where id=$id");
+                $r = $stmt->execute();
 }
 ?>
 

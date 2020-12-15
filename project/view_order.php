@@ -22,9 +22,14 @@ $result = [];
 if (isset($id)) {
     $db = getDB();
 	 
+	$user_id = get_user_id();
+	if(     has_role("Admin")     ){
+		$user_id = $_GET["user_id"];
+	}
+
 
     $stmt = $db->prepare("SELECT OrderItems.*, Products.name FROM Products JOIN (OrderItems JOIN Orders ON Orders.id = OrderItems.order_id) ON Products.id = OrderItems.product_id WHERE Orders.user_id = :user AND Orders.id = :id");
-    $r = $stmt->execute([":id" => $id, ":user" => get_user_id()]);
+    $r = $stmt->execute([":id" => $id, ":user" => $user_id]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if (!$results) {
         $e = $stmt->errorInfo();
