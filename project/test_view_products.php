@@ -14,6 +14,7 @@ if (isset($_GET["id"])) {
 ?>
 <?php
 //fetching
+//ratings added
 $result = [];
 if (isset($id)) {
     $db = getDB();
