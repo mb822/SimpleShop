@@ -13,7 +13,7 @@ $results = [];
 $sort = "";
 $stock = "";
 
-
+//filter by quantity 4-9
 //$query = "not iphone";
 //$sort = "hl";
 
