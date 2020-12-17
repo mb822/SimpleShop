@@ -22,7 +22,7 @@ if(isset($_SESSION["sort"])){$sort = $_SESSION["sort"];}
 if(isset($_SESSION["stock"])){$stock = $_SESSION["stock"];}
 
 if(isset($_POST["query"]) && $_POST["query"] != $query  ){$query = $_POST["query"];}
-if(isset($_POST["sort_by"]) && $_POST["sort_by"] != $query  ){$sort = $_POST["sort_by"];}
+if(isset($_POST["sort_by"]) && $_POST["sort_by"] != $sort  ){$sort = $_POST["sort_by"];}
 if(isset($_POST["stock"]) && $_POST["stock"] != $stock  ){$stock = $_POST["stock"];}
 //echo $_POST["query"];
 //echo $_POST["sort_by"];
@@ -80,8 +80,8 @@ if(isset($_GET["page"])){
 $db = getDB();
 
 if(has_role('Admin')){
-if($query = "ALL"){$stmt = $db->prepare("SELECT count(*) as total from Products WHERE ( :q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock");}
-else{$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND quantity >= $tempstock");}
+if($query = "ALL"){$stmt = $db->prepare("SELECT count(*) as total from Products WHERE ( :q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock");}
+else{$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND quantity <= $tempstock");}
 
 }
 
@@ -108,17 +108,17 @@ if($query != ""){
 
 if(has_role('Admin')){
 	if($query == "ALL"){
-		if(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
-        	elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
-        	elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
-        	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
-        	else{$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  LIMIT :offset, :count");}
+		if(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
+        	elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        	elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+        	elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
+        	else{$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  LIMIT :offset, :count");}
 	}
-     	elseif(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
-        else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  LIMIT :offset, :count");}
+     	elseif(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
+        else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  LIMIT :offset, :count");}
 }
 
 else{
@@ -146,17 +146,17 @@ if (isset($_POST["search"]) && !empty($query)    ) {
 
     if(has_role("Admin")){
         if($query == "ALL"){
-                if(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
-                elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
-                elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
-                elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
-                else{$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity >= $tempstock)  LIMIT :offset, :count");}
+                if(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
+                elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+                elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+                elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
+                else{$stmt = $db->prepare("SELECT * from Products WHERE ((:q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock)  LIMIT :offset, :count");}
 	}
-        elseif(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
-        elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
-        else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity >= $tempstock)  LIMIT :offset, :count");}
+        elseif(strcmp($sort, "lh")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY price ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rLH")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY average_rating ASC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "rHL")==0){$stmt = $db->prepare("SELECT average_rating,checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY average_rating DESC LIMIT :offset, :count");}
+        elseif(strcmp($sort, "hl")==0){$stmt = $db->prepare("SELECT average_rating, checkout_img,id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  ORDER BY price DESC LIMIT :offset, :count");}
+        else{$stmt = $db->prepare("SELECT average_rating,checkout_img, id, name, quantity, price, description, user_id from Products WHERE ((name like :q OR category = :category) AND quantity <= $tempstock)  LIMIT :offset, :count");}
     }
     else{
 
@@ -211,7 +211,7 @@ $stmt->bindValue(":category", "$query"   );
 
 	</select>	
 <?php if(has_role("Admin")): ?>
-    <input name="stock" placeholder="Filter by minimum stock" value="<?php safer_echo($stock); ?>"/>
+    <input name="stock" placeholder="Filter by maximum stock" value="<?php safer_echo($stock); ?>"/>
 <?php endif;?>
 	
     <input type="submit" value="Search" name="search"/>

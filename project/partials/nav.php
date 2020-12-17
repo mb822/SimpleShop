@@ -64,6 +64,7 @@ require_once(__DIR__ . "/../lib/helpers.php");
             <a class="nav-link" href="test_list_products.php">ADMIN: Search Products</a>
             <a class="nav-link" href="test_create_cart.php">ADMIN: Create Cart&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
             <a class="nav-link" href="test_list_carts.php">ADMIN: Search Cart&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+	    <a class="nav-link" href="ordersearch.php">ADMIN: Search Orders&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
 	<?php endif; ?>
     </ul>
   </div>
