@@ -11,7 +11,7 @@
 $query = "";
 $results = [];
 $sort = "";
-$stock = "";
+$stock = "0";
 
 
 //$query = "not iphone";
@@ -31,7 +31,7 @@ $_SESSION["query"] = $query;
 $_SESSION["sort"] = $sort;
 $_SESSION["stock"] = $stock;
 
-$tempstock = 0;
+$tempstock = 1000000000;
 if($stock != 0){$tempstock = $stock;}
 
 
@@ -80,7 +80,7 @@ if(isset($_GET["page"])){
 $db = getDB();
 
 if(has_role('Admin')){
-if($query = "ALL"){$stmt = $db->prepare("SELECT count(*) as total from Products WHERE ( :q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock");}
+if($query == "ALL"){$stmt = $db->prepare("SELECT count(*) as total from Products WHERE ( :q IS NOT NULL  OR :category IS NOT NULL) AND quantity <= $tempstock");}
 else{$stmt = $db->prepare("SELECT count(*) as total from Products WHERE (name like :q OR category = :category) AND quantity <= $tempstock");}
 
 }
