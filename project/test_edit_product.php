@@ -24,16 +24,20 @@ if(isset($_POST["save"])){
         $user = get_user_id();
 	$category = $_POST["category"];
 	$visible = $_POST["visible"];
+
+	$checkout_img = $_POST["checkout_img"];
+
         $db = getDB();
 //	$visibility = 0;
 //	flash();
 //	if($visible){visibility = 1;}
 	
 	if(isset($id)){
-		$stmt = $db->prepare("UPDATE Products set name=:name,visibility=:visibility, quantity=:quantity, price=:price, description=:description,category=:category,  user_id=:user where id=:id");
+		$stmt = $db->prepare("UPDATE Products set  checkout_img=:checkout_img , name=:name,visibility=:visibility, quantity=:quantity, price=:price, description=:description,category=:category,  user_id=:user where id=:id");
 		//$stmt = $db->prepare("UPDATE Products (name, quantity, price, description, user_id) VALUES(:name, :quantity, :price , :description, :user), where id=:id");
 		//$stmt = $db->prepare("INSERT INTO Products  (name, quantity, price, description, user_id) VALUES(:name, :quantity, :price , :description, :user)");
 		$r = $stmt->execute([
+			":checkout_img"=>$checkout_img,
                 	":name"=>$name,
                 	":quantity"=>$quantity,
                 	":price"=>$price,
@@ -93,6 +97,8 @@ if(isset($id)){
 	
 	<input type="text" name="description" placeholder="Description" value="<?php echo $result["description"];?>"  />
 	
+	<input type="text" name="checkout_img" placeholder="Checkout Image" value="<?php echo $result["checkout_img"];?>"  />
+
         <input type="submit" name="save" value="Submit Changes"/>
 
 
