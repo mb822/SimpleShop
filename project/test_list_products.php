@@ -13,7 +13,7 @@ $results = [];
 $sort = "";
 $stock = "";
 
-
+//filter by out of stock 4-8
 //$query = "not iphone";
 //$sort = "hl";
 
