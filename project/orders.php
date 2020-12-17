@@ -11,6 +11,7 @@
 <?php
 
 //pagination
+//pagination 4-4
 $page = 1;
 $per_page = 10;
 if(isset($_GET["page"])){
