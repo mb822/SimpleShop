@@ -1,4 +1,4 @@
-# IT Class Project
+# IT202 Project
 
 [Simple Shop](https://web.njit.edu/~mb822/simple_shop/home.php)
 
