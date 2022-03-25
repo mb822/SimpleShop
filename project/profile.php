@@ -12,6 +12,13 @@ if (!is_logged_in()) {
 $db = getDB();
 //save data if we submitted the form
 if (isset($_POST["saved"])) {
+
+	if(isset($_POST["visibility"])){
+	$visibility = $_POST["visibility"];
+        $stmt = $db->prepare("UPDATE Users set visibility=:visibility where id = :id");
+        $r = $stmt->execute([":visibility" => $visibility, ":id" => get_user_id()]);
+	}
+	
     $isValid = true;
     //check if our email changed
     $newEmail = get_email();
@@ -119,10 +126,11 @@ if (isset($_POST["saved"])) {
 
 
 //fetch/select fresh data in case anything changed
-        $stmt = $db->prepare("SELECT email, username from Users WHERE id = :id LIMIT 1");
+        $stmt = $db->prepare("SELECT visibility, email, username from Users WHERE id = :id LIMIT 1");
         $stmt->execute([":id" => get_user_id()]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
+	    $visibility = $result["visibility"];
             $email = $result["email"];
             $username = $result["username"];
             //let's update our session too
@@ -138,21 +146,58 @@ if (isset($_POST["saved"])) {
 
 ?>
 
+<?php
+$email = get_email();
+$username = get_username();
+
+$stmt = $db->prepare("SELECT  visibility from Users WHERE id = :id LIMIT 1");
+$stmt->execute([":id" => get_user_id()]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$visibility = $user["visibility"];
+
+//$visibility = $_SESSION["user"]["visibility"];
+$name  = "Your";
+
+
+//foreach($_SESSION['user'] as $ret){
+//echo $ret."   ";
+//}
+
+
+if (     isset($_GET["id"])   ) {   
+ $id = $_GET["id"];
+$stmt = $db->prepare("SELECT  visibility,email, username from Users WHERE id = :id LIMIT 1");
+$stmt->execute([":id" => $id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+	$email = $user["email"];
+        $username = $user["username"];
+	$visibility = $user["visibility"];
+	$name = $username."'s"; 
+}
+?>
+
+
+
+
     <form method="POST">
         
-        <label for= "pleasesignin">Profile</label>
-
-        <input type="email" name="email" placeholder="Eamil"  value="<?php safer_echo(get_email()); ?>"/>
+        <label for= "pleasesignin"><?php echo $name.' '; ?>    Profile</label>
+<?php if( !isset($_GET["id"]) ||   $visibility == 'public'): ?>
+        <input type="email" name="email" placeholder="Email"  value="<?php safer_echo($email); ?>"/>
+<?php endif;?>
+        <input type="text" maxlength="60" name="username" placeholder="Username"  value="<?php safer_echo($username); ?>"/>
         
-        <input type="text" maxlength="60" name="username" placeholder="Username"  value="<?php safer_echo(get_username()); ?>"/>
-       
+	<input type="text" maxlength="60" name="visibility" placeholder="Visibility: public or private"  value="<?php safer_echo($visibility); ?>"/>
+
         <!-- DO NOT PRELOAD PASSWORD-->
-       
+<?php if(!isset($_GET["id"])): ?>       
         <input type="password" name="current" placeholder="Current Password"  />
-
         <input type="password" name="password"  placeholder="New Password"  />
-        
         <input type="password" name="confirm"  placeholder="Confirm New Password"  />
         <input type="submit" name="saved" value="Save Profile"/>
+<?php endif; ?>
+
+
     </form>
 <?php require(__DIR__ . "/partials/flash.php");
