@@ -1,3 +1,4 @@
+
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
     <form method="POST">
     <label for= "pleasesignin">Please sign in.</label>
@@ -70,6 +71,7 @@ SELECT Roles.name FROM Roles JOIN UserRoles on Roles.id = UserRoles.role_id wher
                     }
                     else {
                         $_SESSION["user"]["roles"] = [];
+			$_SESSION["user"]["notroles"] = [];
                     }
                     //on successful login let's serve-side redirect the user to the home page.
                    // flash("Log in successful");
